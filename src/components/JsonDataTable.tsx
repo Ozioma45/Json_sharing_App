@@ -9,6 +9,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { format } from "date-fns";
+import { ShareIcon } from "lucide-react";
+import Link from "next/link";
 
 interface JsonData {
   id: string;
@@ -69,9 +71,14 @@ const JsonDataTable = () => {
             <TableCell>
               {format(new Date(data.createdAt), "MMM d, yyyy")}
             </TableCell>
-            {/* <TableCell>
-              <button className="text-blue-500 hover:underline">Share</button>
-            </TableCell> */}
+            <TableCell>
+              <Link
+                href={`${data.id}`}
+                className="text-blue-500 hover:underline"
+              >
+                <ShareIcon className="h-4 w-4" />
+              </Link>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

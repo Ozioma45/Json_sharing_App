@@ -2,11 +2,12 @@ import React from "react";
 import JsonWork from "@/components/jsonWork";
 import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 const page = async () => {
   const user = await currentUser();
   if (!user) {
-    return null;
+    redirect("/");
   }
 
   const loggedUser = await prisma.user.findUnique({
