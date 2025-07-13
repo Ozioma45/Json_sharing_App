@@ -1,4 +1,11 @@
 import { ExternalLinkIcon } from "lucide-react";
+import {
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  SignedIn,
+} from "@clerk/nextjs";
 import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
@@ -21,7 +28,14 @@ const Navbar = () => {
             </Link>
           </nav>
         </div>
-        <Button variant="outline">Sign in</Button>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <Button variant="outline">Sign in</Button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </div>
   );
