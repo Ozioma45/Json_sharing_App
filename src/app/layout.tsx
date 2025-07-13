@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 import {
   ClerkProvider,
   SignInButton,
@@ -27,6 +28,7 @@ export default function RootLayout({
         <body className={`antialiased`}>
           <Navbar />
           <div className="max-w-4xl mx-auto px-4">{children}</div>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

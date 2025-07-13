@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,13 +8,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format } from "date-fns"; // ✅ Correct import
+import { format } from "date-fns";
 
-const jsonDataList = [
-  { id: "jhvsiufsfsdfkj", name: "Test", createdAt: "2024-04-23" },
-];
+interface JsonData {
+  id: string;
+  name: string;
+  createdAt: string;
+  content: any;
+}
 
 const JsonDataTable = () => {
+  const [jsonDataList, setJsonDataList] = useState<JsonData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("./api/json");
+      const data = await response.json();
+
+      setJsonDataList(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to Fetch Data", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return "Loading...";
+  }
+
+  if (!jsonDataList.length) {
+    return (
+      <div className="text-center text-gray-500 mt-6">
+        No data Available, Please add new entry
+      </div>
+    );
+  }
+
   return (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>

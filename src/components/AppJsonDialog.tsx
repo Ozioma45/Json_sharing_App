@@ -16,18 +16,26 @@ import {
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-const AppJsonDialog = () => {
+interface AddJsonDialogProps {
+  onSave: (name: string, value: string) => Promise<void>;
+}
+
+const AppJsonDialog: React.FC<AddJsonDialogProps> = ({ onSave }) => {
   const [jsonData, setJsonData] = useState("");
   const [jsonName, setJsonName] = useState("");
+  const [OpenModal, setOpenModal] = useState<boolean>(false);
 
   console.log(jsonName, jsonData);
 
-  const handleSave = () => {
-    console.log(jsonName, jsonData);
+  const handleSave = async () => {
+    await onSave(jsonName, jsonData);
+    setOpenModal(false);
+    setJsonData("");
+    setJsonName("");
   };
 
   return (
-    <Dialog>
+    <Dialog open={OpenModal} onOpenChange={setOpenModal}>
       <DialogTrigger asChild>
         <Button>Add JSON Data</Button>
       </DialogTrigger>
@@ -58,7 +66,6 @@ const AppJsonDialog = () => {
               onChange={(value) => setJsonData(value)}
               className="border shadow-sm"
             />
-            ;
           </div>
 
           <DialogFooter>

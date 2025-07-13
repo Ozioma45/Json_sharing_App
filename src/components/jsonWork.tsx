@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import { toast } from "sonner";
+import React, { useState } from "react";
 import {
   Card,
   CardAction,
@@ -12,6 +15,23 @@ import JsonDataTable from "./JsonDataTable";
 import AppJsonDialog from "./AppJsonDialog";
 
 const JsonWork = () => {
+  const [refreshKeys, setRefreshedKey] = useState(0);
+
+  const handleSave = async (jsonName: string, jsonData: string) => {
+    const response = await fetch("/api/json", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: jsonName, content: jsonData }),
+    });
+
+    if (response.ok) {
+      setRefreshedKey((prev) => prev + 1);
+
+      toast.success("Data saved successfully");
+    } else {
+      toast.error("Something went wrong. Try again");
+    }
+  };
   return (
     <Card>
       <CardHeader>
@@ -20,10 +40,10 @@ const JsonWork = () => {
         <CardAction>Card Action</CardAction>
       </CardHeader>
       <CardContent>
-        <JsonDataTable />
+        <JsonDataTable key={refreshKeys} />
       </CardContent>
       <CardFooter>
-        <AppJsonDialog />
+        <AppJsonDialog onSave={handleSave} />
       </CardFooter>
     </Card>
   );
