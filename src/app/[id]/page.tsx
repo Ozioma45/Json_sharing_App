@@ -9,7 +9,7 @@ interface JsonData {
   id: string;
   name: string;
   createdAt: string;
-  content: any;
+  content: unknown;
 }
 
 const JsonViewPage = () => {
@@ -17,20 +17,20 @@ const JsonViewPage = () => {
   const [jsonData, setJsonData] = useState<JsonData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`/api/json/${id}`);
-      const data = await response.json();
-
-      setJsonData(data);
-    } catch (error) {
-      console.error("Failed to Fetch Data", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/json/${id}`);
+        const data = await response.json();
+
+        setJsonData(data);
+      } catch (error) {
+        console.error("Failed to Fetch Data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (id) {
       fetchData();
     }

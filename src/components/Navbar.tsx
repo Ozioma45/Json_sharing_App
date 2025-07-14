@@ -1,11 +1,5 @@
 import { ExternalLinkIcon } from "lucide-react";
-import {
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-  SignedIn,
-} from "@clerk/nextjs";
+import { SignedOut, SignInButton, UserButton, SignedIn } from "@clerk/nextjs";
 import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";

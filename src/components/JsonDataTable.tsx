@@ -16,7 +16,7 @@ interface JsonData {
   id: string;
   name: string;
   createdAt: string;
-  content: any;
+  content: unknown;
 }
 
 const JsonDataTable = () => {
